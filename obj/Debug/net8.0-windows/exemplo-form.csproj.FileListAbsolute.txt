@@ -1,0 +1,15 @@
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\bin\Debug\net8.0-windows\exemplo-form.exe
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\bin\Debug\net8.0-windows\exemplo-form.deps.json
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\bin\Debug\net8.0-windows\exemplo-form.runtimeconfig.json
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\bin\Debug\net8.0-windows\exemplo-form.dll
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\bin\Debug\net8.0-windows\exemplo-form.pdb
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.csproj.AssemblyReference.cache
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.AssemblyInfoInputs.cache
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.AssemblyInfo.cs
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.csproj.CoreCompileInputs.cache
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.dll
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\refint\exemplo-form.dll
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.pdb
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\exemplo-form.genruntimeconfig.cache
+C:\Users\renan.ponick\Documents\C#\JP002\exemplo-form\obj\Debug\net8.0-windows\ref\exemplo-form.dll
