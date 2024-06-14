@@ -6,6 +6,6 @@ static class Program
 {
     static void Main()
     {
-        Application.Run(new Login());
+        Application.Run(new PessoaView());
     }    
 }
