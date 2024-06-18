@@ -1,19 +1,28 @@
-namespace Avaliacao {
+using Repo;
+
+namespace Model {
     public class Pessoa {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public int Idade { get; set; }
         public string Cpf { get; set; }
 
+        public Pessoa() {}
+
         public Pessoa(string nome, int idade, string cpf) {
-            this.Nome = nome;
+            Nome = nome;
             Idade = idade;
             Cpf = cpf;
 
-            ListPessoa.pessoas.Add(this);
+            RepositoryPessoa.AddPessoa(this);
+        }
+
+        public static void Sincronizar() {
+            RepositoryPessoa.Sincronizar();
         }
 
         public static List<Pessoa> ListarPessoa() {
-            return ListPessoa.pessoas;
+            return RepositoryPessoa.ListPessoas();
         }
 
         public static void AlterarPessoa(
@@ -22,16 +31,18 @@ namespace Avaliacao {
             int idade,
             string cpf
         ){
-            Pessoa person = ListPessoa.pessoas[indice];
-            person.Nome = nome;
-            person.Idade = idade;
-            person.Cpf = cpf;
+            Pessoa person = RepositoryPessoa.GetPessoa(indice);
+            if(person != null){
+                person.Nome = nome;
+                person.Cpf = cpf;
+                person.Idade = idade;
 
-            ListPessoa.pessoas[indice] = person;
+                RepositoryPessoa.UpdatePessoa(indice, person);
+            }
         }
 
         public static void DeletarPessoa(int indice) {
-            ListPessoa.pessoas.RemoveAt(indice);
+            RepositoryPessoa.DeletePessoa(indice);
         }
 
         public void Apresentar() {

@@ -1,5 +1,11 @@
-namespace Avaliacao {
+using Model;
+
+namespace Controller {
     public class ControllerPessoa {
+
+        public static void Sincronizar(){
+            Pessoa.Sincronizar();
+        }
         public static void CriarPessoa(
             string nome,
             int idade,
@@ -23,18 +29,12 @@ namespace Avaliacao {
             int idade,
             string cpf
         ) {
-            List<Pessoa> pessoas = ListarPessoa();
-            if(indice >= 0 && indice < pessoas.Count){
-                Pessoa.AlterarPessoa(
-                    indice,
-                    nome,
-                    idade,
-                    cpf
-                );
-                Console.WriteLine("Pessoa alterada com sucesso");
-            } else {
-                Console.WriteLine("Indice inválido");
-            }
+            Pessoa.AlterarPessoa(
+                indice,
+                nome,
+                idade,
+                cpf
+            );
         }
 
         public static void DeletarPessoa(int indice) {

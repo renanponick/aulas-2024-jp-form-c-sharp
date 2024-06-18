@@ -1,31 +1,34 @@
-using Avaliacao;
+using Controller;
+using Model;
 
-namespace Views;
+namespace View;
 
-public class PessoaView : Form
-{
+public class ViewPessoa : Form {
+
     private readonly Label LblNome;
     private readonly Label LblCpf;
+    private readonly Label LblIdade;
     private readonly TextBox InpNome;
     private readonly TextBox InpCpf;
+    private readonly TextBox InpIdade;
     private readonly Button BtnCadastrar;
-    private readonly Button BtnListar;
+    private readonly Button BtnAlterar;
     private readonly Button BtnDeletar;
-    private readonly DataGridView DataGridView;
-    
-    public PessoaView() {
+    private readonly DataGridView DgvPessoas;
+
+    public ViewPessoa() {
+        ControllerPessoa.Sincronizar();
+
         Size = new Size(400, 400);
         StartPosition = FormStartPosition.CenterScreen;
 
         LblNome = new Label {
             Text = "Nome: ",
-            // ForeColor = Color.White,
-            // BackColor = Color.Black,
-            Location = new Point(50, 50)
+            Location = new Point(50, 50),
         };
         LblCpf = new Label {
             Text = "Cpf: ",
-            Location = new Point(50, 100)
+            Location = new Point(50, 100),
         };
 
         InpNome = new TextBox {
@@ -44,84 +47,82 @@ public class PessoaView : Form
             Location = new Point(50, 150),
         };
         BtnCadastrar.Click += ClickCadastrar;
-        
-        BtnListar = new Button {
-            Text = "Listar",
+        BtnAlterar = new Button {
+            Text = "Alterar",
             Location = new Point(150, 150),
         };
-        BtnListar.Click += ClickListar;
-                
+        BtnCadastrar.Click += ClickAlterar;
         BtnDeletar = new Button {
             Text = "Deletar",
             Location = new Point(250, 150),
         };
         BtnDeletar.Click += ClickDeletar;
 
-        DataGridView = new DataGridView {
+        DgvPessoas = new DataGridView {
             Location = new Point(0, 200),
             Size = new Size(400, 150)
         };
 
+
         Controls.Add(LblNome);
         Controls.Add(LblCpf);
+        Controls.Add(LblIdade);
         Controls.Add(InpNome);
         Controls.Add(InpCpf);
+        Controls.Add(InpIdade);
         Controls.Add(BtnCadastrar);
-        Controls.Add(BtnListar);
+        Controls.Add(BtnAlterar);
         Controls.Add(BtnDeletar);
-        Controls.Add(DataGridView);
+        Controls.Add(DgvPessoas);
+        
+        Listar();
+    }
+
+    private void ClickCadastrar(object? sender, EventArgs e) {
+        if(InpNome.Text == "") {
+            return;
+        }
+        ControllerPessoa.CriarPessoa(InpNome.Text, 10, InpCpf.Text);
+        Listar();
+    }
+
+    private void ClickAlterar(object? sender, EventArgs e) {
+        int index = DgvPessoas.SelectedRows[0].Index;
+        if(InpNome.Text == "") {
+            return;
+        }
+        ControllerPessoa.AlterarPessoa(index, InpNome.Text, 10, InpCpf.Text);
+        Listar();
     }
 
     private void Listar() {
         List<Pessoa> pessoas = ControllerPessoa.ListarPessoa();
-        DataGridView.Columns.Clear();
-
-        DataGridView.AutoGenerateColumns = false;
-        DataGridView.DataSource = pessoas;
-
-        // Adiciona colunas ao DataGridView
-        DataGridView.Columns.Add(new DataGridViewTextBoxColumn
-        {
+        DgvPessoas.Columns.Clear();
+        DgvPessoas.AutoGenerateColumns = false;
+        DgvPessoas.DataSource = pessoas;
+        
+        DgvPessoas.Columns.Add(new DataGridViewTextBoxColumn {
+            DataPropertyName = "Id",
+            HeaderText = "Id"
+        });
+        DgvPessoas.Columns.Add(new DataGridViewTextBoxColumn {
             DataPropertyName = "Nome",
             HeaderText = "Nome"
         });
-        DataGridView.Columns.Add(new DataGridViewTextBoxColumn
-        {
+        DgvPessoas.Columns.Add(new DataGridViewTextBoxColumn {
             DataPropertyName = "Cpf",
             HeaderText = "Cpf"
         });
-        DataGridView.Columns.Add(new DataGridViewTextBoxColumn
-        {
+        DgvPessoas.Columns.Add(new DataGridViewTextBoxColumn {
             DataPropertyName = "Idade",
             HeaderText = "Idade"
         });
     }
-
-    private void ClickCadastrar(object? sender, EventArgs e) {
-        if(InpNome.Text.Length < 1){
-            MessageBox.Show("Input Nome não pode ser vazio");
-            return;
-        }
-        if(InpCpf.Text == ""){
-            MessageBox.Show("Input Cpf não pode ser vazio");
-            return;
-        }
-        // Hide();
-        ControllerPessoa.CriarPessoa(InpNome.Text, 0 ,InpCpf.Text);
-        MessageBox.Show("Cadastrado com sucesso");
-        Listar();
-        // new Exemplo(this).Show();
-    }
-
-    private void ClickListar(object? sender, EventArgs e) {
-       Listar();
-    }
-    
     private void ClickDeletar(object? sender, EventArgs e) {
-        int index = DataGridView.SelectedRows[0].Index;
+        int index = DgvPessoas.SelectedRows[0].Index;
         ControllerPessoa.DeletarPessoa(index);
         Listar();
     }
-    
-    
+
+
 }
