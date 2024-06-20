@@ -47,12 +47,12 @@ namespace Repo
             while (reader.Read())
             {
                 // Aqui você pode acessar os dados retornados pela consulta SELECT
-                int id = Convert.ToInt32(row["id"].ToString());
+                int id = Convert.ToInt32(reader["id"].ToString());
                 Pessoa pessoa = new Pessoa();
                 pessoa.Id = id;
-                pessoa.Idade = Convert.ToInt32(row["idade"].ToString());
-                pessoa.Nome = row["nome"].ToString();
-                pessoa.Cpf = row["cpf"].ToString();
+                pessoa.Idade = Convert.ToInt32(reader["idade"].ToString());
+                pessoa.Nome = reader["nome"].ToString();
+                pessoa.Cpf = reader["cpf"].ToString();
                 pessoas.Add(pessoa);
             }
             CloseConexao();
