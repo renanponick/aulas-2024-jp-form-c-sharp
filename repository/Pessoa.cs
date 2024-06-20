@@ -43,13 +43,8 @@ namespace Repo
             InitConexao();
             string query = "SELECT * FROM pessoas";
             MySqlCommand command = new MySqlCommand(query, conexao);
-            MySqlDataAdapter bdAdapter = new MySqlDataAdapter(command);
-
-            DataSet dbDataSet = new DataSet();
-            bdAdapter.Fill(dbDataSet, "pessoas");
-            DataTable table = dbDataSet.Tables["pessoas"];
-
-            foreach(DataRow row in table.Rows)
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
                 // Aqui você pode acessar os dados retornados pela consulta SELECT
                 int id = Convert.ToInt32(row["id"].ToString());
@@ -86,7 +81,7 @@ namespace Repo
                     MessageBox.Show("Usuário não cadastrada");
                 }
             }catch (Exception ex){
-                    MessageBox.Show("Erro durante a execução do comando: " + ex.Message);
+                MessageBox.Show("Erro durante a execução do comando: " + ex.Message);
             }
             CloseConexao();
         }
