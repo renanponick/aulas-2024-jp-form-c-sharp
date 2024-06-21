@@ -1,16 +1,12 @@
 using Model;
-
-using System.Data;
 using MySqlConnector;
 
-namespace Repo
-{
-    public class RepositoryPessoa
-    {
+namespace Repo {
+    public class ListPessoa {
         private static MySqlConnection conexao;
 
         static List<Pessoa> pessoas = new List<Pessoa>();
-
+        
         public static List<Pessoa> ListPessoas(){
             return pessoas;
         }
@@ -22,67 +18,67 @@ namespace Repo
                 return pessoas[index];
             }
         }
-    
+
         public static void InitConexao(){
-            //Define string de conexão
             string info = "server=localhost;database=projetointegrador;user id=root;password=''";
             conexao = new MySqlConnection(info);
-            try{
+            try {
                 conexao.Open();
-            }
-            catch{
-                MessageBox.Show("Impossível estabelecer conexão com o banco");
+            } catch {
+                MessageBox.Show("Não deu, foi mal");
             }
         }
-
-        public static void CloseConexao(){
+        public static void CloseConexao() {
             conexao.Close();
         }
 
-        public static List<Pessoa> Sincronizar(){
+        public static List<Pessoa> Sincronizar() {
+            // inicializa a conexão com o banco
             InitConexao();
             string query = "SELECT * FROM pessoas";
             MySqlCommand command = new MySqlCommand(query, conexao);
             MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                // Aqui você pode acessar os dados retornados pela consulta SELECT
-                int id = Convert.ToInt32(reader["id"].ToString());
+            while (reader.Read()) {
                 Pessoa pessoa = new Pessoa();
-                pessoa.Id = id;
-                pessoa.Idade = Convert.ToInt32(reader["idade"].ToString());
+                pessoa.Id = Convert.ToInt32(reader["id"].ToString());
                 pessoa.Nome = reader["nome"].ToString();
+                pessoa.Idade = Convert.ToInt32(reader["idade"].ToString());
                 pessoa.Cpf = reader["cpf"].ToString();
                 pessoas.Add(pessoa);
             }
+            // fcha a conexão com o banco
             CloseConexao();
             return pessoas;
         }
 
-        public static void AddPessoa(Pessoa pessoa){
+        public static void Criar(Pessoa pessoa) {
             InitConexao();
-            string query = "INSERT INTO pessoas (nome, idade, cpf) VALUES (@Nome, @Idade, @Cpf)";
-            MySqlCommand command = new MySqlCommand(query, conexao);
+            string insert = "INSERT INTO pessoas (nome, idade, cpf) VALUES (@Nome, @Idade, @Cpf)";
+            MySqlCommand command = new MySqlCommand(insert, conexao);
             try {
-                if(pessoa != null){
+                if(pessoa.Nome == null || pessoa.Idade < 0 || pessoa.Cpf == null) {
+                    MessageBox.Show("Deu ruim, favor preencher a pessoa");
+                } else {
                     command.Parameters.AddWithValue("@Nome", pessoa.Nome);
-                    command.Parameters.AddWithValue("@Cpf", pessoa.Cpf);
                     command.Parameters.AddWithValue("@Idade", pessoa.Idade);
+                    command.Parameters.AddWithValue("@Cpf", pessoa.Cpf);
+
                     int rowsAffected = command.ExecuteNonQuery();
                     pessoa.Id = Convert.ToInt32(command.LastInsertedId);
-                
-                    if (rowsAffected > 0) {
-                    pessoas.Add(pessoa);
+
+                    if(rowsAffected > 0){
+                        MessageBox.Show("Pessoa cadastrada com sucesso");
+                        pessoas.Add(pessoa);
+                    } else {
+                        MessageBox.Show("Deu ruim, não deu pra adicionar");
                     }
-                    else {
-                        MessageBox.Show("Usuário não cadastrada");
-                    }
-                }else {
-                    MessageBox.Show("Usuário não cadastrada");
                 }
-            }catch (Exception ex){
-                MessageBox.Show("Erro durante a execução do comando: " + ex.Message);
+            } catch (Exception e) {
+                MessageBox.Show("Deu ruim: " + e.Message);
             }
+            // Executar a query
+
+
             CloseConexao();
         }
 
@@ -114,21 +110,23 @@ namespace Repo
             }
             CloseConexao();
         }
-    
-        public static void DeletePessoa(int index){
+
+        public static void Delete(int index) {
             InitConexao();
-            string query = "DELETE FROM pessoas WHERE id = @Id";
-            MySqlCommand command = new MySqlCommand(query, conexao);
+            string delete = "DELETE FROM pessoas WHERE id = @Id";
+            MySqlCommand command = new MySqlCommand(delete, conexao);
             command.Parameters.AddWithValue("@Id", pessoas[index].Id);
-            int rowsAffected = command.ExecuteNonQuery();
-        
-            if (rowsAffected > 0) {
+            // executar
+            if(rowsAffected > 0) {
+                int rowsAffected = command.ExecuteNonQuery();
                 pessoas.RemoveAt(index);
-            }
-            else {
-                MessageBox.Show("Usuário não excluido");
+                MessageBox.Show("Pessoa deletada com sucesso.");
+            } else {
+                MessageBox.Show("Usuário não encontrado.");
             }
             CloseConexao();
         }
+
     }
+
 }

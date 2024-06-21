@@ -14,15 +14,15 @@ namespace Model {
             Idade = idade;
             Cpf = cpf;
 
-            RepositoryPessoa.AddPessoa(this);
+            ListPessoa.Criar(this);
         }
 
-        public static void Sincronizar() {
-            RepositoryPessoa.Sincronizar();
+        public static List<Pessoa> Sincronizar() {
+            return ListPessoa.Sincronizar();
         }
 
         public static List<Pessoa> ListarPessoa() {
-            return RepositoryPessoa.ListPessoas();
+            return ListPessoa.ListPessoas();
         }
 
         public static void AlterarPessoa(
@@ -30,7 +30,7 @@ namespace Model {
             string nome,
             int idade,
             string cpf
-        ){
+        ){  
             Pessoa person = RepositoryPessoa.GetPessoa(indice);
             if(person != null){
                 person.Nome = nome;
@@ -42,7 +42,7 @@ namespace Model {
         }
 
         public static void DeletarPessoa(int indice) {
-            RepositoryPessoa.DeletePessoa(indice);
+            ListPessoa.Delete(indice);
         }
 
         public void Apresentar() {
