@@ -31,13 +31,13 @@ namespace Model {
             int idade,
             string cpf
         ){  
-            Pessoa person = RepositoryPessoa.GetPessoa(indice);
+            Pessoa person = ListPessoa.GetPessoa(indice);
             if(person != null){
                 person.Nome = nome;
                 person.Cpf = cpf;
                 person.Idade = idade;
 
-                RepositoryPessoa.UpdatePessoa(indice, person);
+                ListPessoa.UpdatePessoa(indice, person);
             }
         }
 

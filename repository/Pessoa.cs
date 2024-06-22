@@ -117,8 +117,8 @@ namespace Repo {
             MySqlCommand command = new MySqlCommand(delete, conexao);
             command.Parameters.AddWithValue("@Id", pessoas[index].Id);
             // executar
+            int rowsAffected = command.ExecuteNonQuery();
             if(rowsAffected > 0) {
-                int rowsAffected = command.ExecuteNonQuery();
                 pessoas.RemoveAt(index);
                 MessageBox.Show("Pessoa deletada com sucesso.");
             } else {
