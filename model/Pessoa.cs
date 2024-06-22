@@ -31,14 +31,7 @@ namespace Model {
             int idade,
             string cpf
         ){  
-            Pessoa person = ListPessoa.GetPessoa(indice);
-            if(person != null){
-                person.Nome = nome;
-                person.Cpf = cpf;
-                person.Idade = idade;
-
-                ListPessoa.UpdatePessoa(indice, person);
-            }
+            ListPessoa.UpdatePessoa(indice, nome, idade, cpf);
         }
 
         public static void DeletarPessoa(int indice) {

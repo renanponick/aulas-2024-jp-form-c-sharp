@@ -76,37 +76,42 @@ namespace Repo {
             } catch (Exception e) {
                 MessageBox.Show("Deu ruim: " + e.Message);
             }
-            // Executar a query
-
 
             CloseConexao();
         }
 
-        public static void UpdatePessoa(int index, Pessoa pessoa){
+        public static void UpdatePessoa(
+            int indice,
+            string nome,
+            int idade,
+            string cpf
+        ){
             InitConexao();
             MessageBox.Show("iniciando");
             string query = "UPDATE pessoas SET nome = @Nome, idade = @Idade, cpf = @Cpf WHERE id = @Id";
             MySqlCommand command = new MySqlCommand(query, conexao);
+            Pessoa pessoa = pessoas[indice];
             try {
-            if(pessoa != null){
-                command.Parameters.AddWithValue("@Id", pessoa.Id);
-                command.Parameters.AddWithValue("@Nome", pessoa.Nome);
-                command.Parameters.AddWithValue("@Cpf", pessoa.Cpf);
-                command.Parameters.AddWithValue("@Idade", pessoa.Idade);
-                int rowsAffected = command.ExecuteNonQuery();
-            
-                if (rowsAffected > 0) {
-                    pessoas[index] = pessoa;
-                }
-                else {
-                    MessageBox.Show(rowsAffected.ToString());
-                }
-            }else {
-                MessageBox.Show("Usuário não encontrado");
-            }
+                if(nome != null || idade > 0 || cpf != null) {
+                    command.Parameters.AddWithValue("@Id", pessoa.Id);
+                    command.Parameters.AddWithValue("@Nome", nome);
+                    command.Parameters.AddWithValue("@Cpf", cpf);
+                    command.Parameters.AddWithValue("@Idade", idade);
+                    int rowsAffected = command.ExecuteNonQuery();
                 
+                    if (rowsAffected > 0) {
+                        pessoa.Nome = nome;
+                        pessoa.Idade = idade;
+                        pessoa.Cpf = cpf;
+                    }
+                    else {
+                        MessageBox.Show(rowsAffected.ToString());
+                    }
+                }else {
+                    MessageBox.Show("Usuário não encontrado");
+                }
             }catch (Exception ex){
-                    MessageBox.Show("Erro durante a execução do comando: " + ex.Message);
+                MessageBox.Show("Erro durante a execução do comando: " + ex.Message);
             }
             CloseConexao();
         }
