@@ -51,7 +51,7 @@ public class ViewPessoa : Form {
             Text = "Alterar",
             Location = new Point(150, 150),
         };
-        BtnCadastrar.Click += ClickAlterar;
+        BtnAlterar.Click += ClickAlterar;
         BtnDeletar = new Button {
             Text = "Deletar",
             Location = new Point(250, 150),
